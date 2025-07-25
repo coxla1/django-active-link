@@ -14,7 +14,7 @@ def active_link(
     css_inactive_class="",
     strict=None,
     *args,
-    **kwargs
+    **kwargs,
 ):
     """
     Renders the given CSS class if the request path matches the path of the view.
@@ -43,7 +43,9 @@ def active_link(
     if hasattr(request, "resolver_match") and hasattr(request.resolver_match, "kwargs"):
         resolver_kwargs = request.resolver_match.kwargs
 
-    kwargs.update(resolver_kwargs)
+    for key in resolver_kwargs:
+        if key not in kwargs:
+            kwargs[key] = resolver_kwargs[key]
 
     active = False
     views = viewnames.split("||")
