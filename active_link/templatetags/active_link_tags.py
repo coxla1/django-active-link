@@ -60,7 +60,7 @@ def active_link(
         if strict:
             active = request_path == path
         else:
-            active = request_path.startswith(path) or path.startswith(request_path)
+            active = request_path.startswith(path)
         if active:
             break
 
