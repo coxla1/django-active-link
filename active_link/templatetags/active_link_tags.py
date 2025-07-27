@@ -13,6 +13,7 @@ def active_link(
     css_class=None,
     css_inactive_class="",
     strict=None,
+    no_args=None,
     *args,
     **kwargs,
 ):
@@ -34,6 +35,9 @@ def active_link(
     if strict is None:
         strict = getattr(settings, "ACTIVE_LINK_STRICT", False)
 
+    if no_args is None:
+        strict = getattr(settings, "ACTIVE_LINK_NO_ARGS", False)
+
     request = context.get("request")
     if request is None:
         # Can't work without the request object.
@@ -53,7 +57,11 @@ def active_link(
 
     for viewname in views:
         try:
-            path = reverse(viewname.strip(), args=args, kwargs=kwargs)
+            if no_args:
+                path = reverse(viewname.strip())
+            else:
+                path = reverse(viewname.strip(), args=args, kwargs=kwargs)
+
         except NoReverseMatch:
             continue
 
