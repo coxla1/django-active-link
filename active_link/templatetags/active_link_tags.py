@@ -36,7 +36,7 @@ def active_link(
         strict = getattr(settings, "ACTIVE_LINK_STRICT", False)
 
     if no_args is None:
-        strict = getattr(settings, "ACTIVE_LINK_NO_ARGS", False)
+        no_args = getattr(settings, "ACTIVE_LINK_NO_ARGS", False)
 
     request = context.get("request")
     if request is None:
